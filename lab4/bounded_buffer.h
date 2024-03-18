@@ -5,7 +5,14 @@
 /* do not use any global variables in this file */
 
 struct bounded_buffer{
-    /* define all necessary variables here */
+	void **buffet;
+	int size;
+	int count;
+	int head;
+	int tail;
+	pthread_mutex_t mutex;
+	pthread_cond_t full;
+	pthread cond_t empty;
 };
 
 /* do not change the following function definitions */
