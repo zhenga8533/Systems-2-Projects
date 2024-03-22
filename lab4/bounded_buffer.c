@@ -6,7 +6,7 @@
 
 void bounded_buffer_init(struct bounded_buffer *buffer, int size) {
 	buffer->buffet = (void **) malloc(size * sizeof(void *));
-	if (buffer->buffet) == NULL) {
+	if ((buffer->buffet) == NULL) {
 		perror("bounded_buffer_init memory allocation failed!");
 		exit(1);
 	}
