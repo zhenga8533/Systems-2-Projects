@@ -24,6 +24,15 @@ int main() {
     	pthread_create(&consumers[i], NULL, consumer, NULL);
     }
     
+    for (int i = 0; i < 3; i++) {
+    	pthread_join(producers[i], NULL);
+    }
+    
+    
+    for (int i = 0; i < 2; i++) {
+    	pthread_join(consumers[i], NULL);
+    }
+    
     /* prevent thread genocide, replace in lab 5 :) */
 	sleep(5);
 	bounded_buffer_destroy(&queue);
@@ -53,9 +62,11 @@ void *producer(void *ptr) {
    It should pop messages from the queue and print them */
 void *consumer(void *ptr) {
 	while (1) {
-		int *message = (int *) bounded_buffer_pop(ptr);
-		printf("Consumer %lu consumed message: %d\n", pthread_self(), *message);
-		free(message);
+		int *message = (int *) bounded_buffer_pop(&queue);
+		if (message != NULL) {
+			printf("Consumer %lu consumed message: %d\n", pthread_self(), *message);
+			free(message);
+		}
 	}
 
 	pthread_exit(NULL);
